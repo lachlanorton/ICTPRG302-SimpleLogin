@@ -68,6 +68,8 @@ def login():
         print("Returning back to main menu...")
         return ""
     password = str(input("PASSWORD: "))
+    combination = str(username + " " + password)
+    # use combination to compare against entries in accounts.txt
 
     # check login information against accounts file
     # if login information matches:
