@@ -1,9 +1,13 @@
+# ///////////////////////////////////////////////////////////
 # Welcome to "The Python Playground"
 # This space is used for experimentation of code
 # For actual assessment file, please refer to simplelogin.py
 # Author: Lachlan Orton
-# Date: 15/03/2023
-# TAFE NSW St. Leonard's / Programming and Data
+# Start Date: 15/03/2023
+# Last Updated: 19/03/2023
+# On GitHub?: Yes
+# TAFE NSW St. Leonard's / ICTPRG302 Programming and Data
+# ///////////////////////////////////////////////////////////
 
 import time
 
