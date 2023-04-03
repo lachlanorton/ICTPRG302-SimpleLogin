@@ -1,12 +1,6 @@
 # ////////////////////////////////////////////////////////////
-# SimpleLogin program
-# For ICTPRG302 Assessment Event 2 - Project
-#
-# Author: Lachlan Orton
-# Start Date: 15/03/2023
-# Last Updated: 19/03/2023
-# On GitHub?: Yes
-# TAFE NSW St. Leonard's / ICTPRG302 Programming and Data
+# ALPHA VERSION of SimpleLogin
+# PLEASE REFER TO simplelogin.py FOR ASSESSMENT!
 # ////////////////////////////////////////////////////////////
 
 import time

@@ -1,13 +1,17 @@
-# ///////////////////////////////////////////////////////////
+# /////////////////////////////////////////////////////////////
 # SimpleLogin program
 # For ICTPRG302 Assessment Event 2 - Project
 #
 # Author: Lachlan Orton
 # Start Date: 15/03/2023
-# Last Updated: 21/03/2023
+# Last Updated: 28/03/2023
 # On GitHub?: Yes
 # TAFE NSW St. Leonard's / ICTPRG302 Programming and Data
-# ///////////////////////////////////////////////////////////
+#
+# This program handles logging users into accounts if their
+# details are present. It also handles registering new users
+# and adding those details to file, alongside other functions.
+# /////////////////////////////////////////////////////////////
 
 import time
 import random
@@ -94,6 +98,7 @@ def login():
     # 'account' variable stores each individual line within accounts file.
     account = allAccounts.readlines()
 
+    checkAccount = ""
     # Using for loop, we go through each line, strip the line to it's pure string, and compare to 'combination'
     for entry in account:
         checkAccount = entry.strip()
@@ -116,33 +121,53 @@ def register():
     allAccounts = open("accounts.txt", "a")
     print("\nWelcome to REGISTER. Please provide new details.")
     print("Or press ENTER (empty entry) to exit back to main menu.\n")
+    # Ask user for USERNAME.
     username = str(input("USERNAME: "))
+    # If USERNAME input is empty, send user back to main menu after delay.
     if username == "":
         print("Empty entry received. Returning back to main menu...")
         time.sleep(2)
         return
+    # Give user password options (user defined vs randomly generated)
     print("\nA) I want to make my own password")
     print("B) I want a randomly generated password")
     while True:
+        # Ask user for password choice.
         passwordPref = str(input("Please choose your preference for password: "))
+        # If user chooses A/a, allow user to define their own password.
         if passwordPref == "A" or passwordPref == "a":
             print("\nYou have chosen to make your own password.")
+            print("Please note that the password length must be between 6-20 characters long.")
             while True:
+                # Ask user for PASSWORD
                 password = str(input("PASSWORD: "))
+                # Grab length of password and add to variable to use for comparison
+                passwordLen = len(password)
+                # If password is empty, send back.
                 if password == "":
                     print("Password can't be empty! Try again...")
-                else:
+                # If password is less than 6 characters long, send back.
+                if passwordLen < 6:
+                    print("Password is less than 6 characters long! Try again...")
+                # If password is more than 20 characters long, send back.
+                if passwordLen > 20:
+                    print("Password is longer than 20 characters long! Try again...")
+                # If password matches restrictions, leave while loop and continue.
+                elif 6 <= passwordLen <= 20:
                     break
             break
+        # If user chooses B/b, generate random password.
         elif passwordPref == "B" or passwordPref == "b":
             print("\nYou have chosen a randomly generated password.")
+            # Set 'password' variable to value returned from randompassword() function
             password = randompassword()
             print("\nYour password is: " + password)
             break
         print("\nInvalid response. Please try again.\n")
 
+    # Append new username and password to file on new line according to standard
     allAccounts.write("\n" + username + " " + password)
-    print("Please note your new username and password details down.\n")
+    print("Success! \nPlease note your new username and password details down.\n")
     time.sleep(4)
     print("Successfully registered! Welcome, " + username)
     time.sleep(2)
@@ -152,21 +177,43 @@ def register():
 # This function handles creating a random password for the user.
 def randompassword():
     # Ask user for password length (in characters).
-    passLength = int(input("How long (in characters) would you like your password to be? (E.g. 5): "))
+    while True:
+        askLength = input("How long (in characters) would you like your password to be? (E.g. 6): ")
+        # Check if input isn't empty
+        if askLength:
+            # Cast input value to integer and place in new variable
+            passLength = int(askLength)
+            # Check if password is less than 6 characters long
+            if passLength < 6:
+                print("Password is less than 6 characters long! Try again...")
+            # Check if password is more than 20 characters long
+            if passLength > 20:
+                print("Password is longer than 20 characters long! Try again...")
+            # If password fits restrictions, exit while loop.
+            elif 6 <= passLength <= 20:
+                break
+        else:
+            print("Password length cannot be empty! Try again...")
     # Present user with preferences they can choose for password generation.
     print("\nPlease choose what you would like your password to be made of.")
     print("A) Letters\nB) Numbers\nC) Special characters\nENTER) I've completed my choices, make my password!")
+
+    # Define string pool for character sets to be placed in
+    # Password generation will grab random characters from this pool
     passChoices = ""
     while True:
         # Ask user for their preferences for password generation.
         passPref = str(input("\nPlease input your preferences: "))
         if passPref == "A" or passPref == "a":
-            passChoices += string.digits
-            print("Numbers added to your password preference.")
-        elif passPref == "B" or passPref == "b":
+            # Adds letters (lowercase and uppercase) to pool
             passChoices += string.ascii_letters
             print("Letters added to your password preference.")
+        elif passPref == "B" or passPref == "b":
+            # Adds numbers to pool
+            passChoices += string.digits
+            print("Numbers added to your password preference.")
         elif passPref == "C" or passPref == "c":
+            # Adds special characters to pool
             passChoices += string.punctuation
             print("Special characters added to your password preference.")
         elif passPref == "":
